@@ -15,6 +15,7 @@ class CreateAppsTable extends Migration
     {
         Schema::create('apps', function (Blueprint $table) {
             $table->id();
+            $table->string('token');
             $table->text('title', 255);
             $table->text('base_url');
             $table->longText('api_key'); // Encrypted

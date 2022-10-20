@@ -32,10 +32,11 @@ class APIAuthentication
                 ], 
             400);
         }
-        // check database has app information
-        $app = App::where('base_url', $requestFromApp)->where('api_key', (new CryptoService())->encrypt($apiKey))->first();
 
-        if(!$app){
+        
+        // check database has app information
+        $app = App::where('base_url', $requestFromApp)->first();
+        if($apiKey !== (new CryptoService())->decrypt($app->api_key)){
             return response()->json(
                 [
                     'status' => 'error',
@@ -53,13 +54,13 @@ class APIAuthentication
         // check for binded ips
         if(count($app->binded_ips) == 0){
             // ip bind needs not to be checked, add app info to request for future use and return next
-            define('APP_ID', $app->id);
+            define('APP_TOKEN', $app->token);
             return $next($request);
         }
         
         // as binded ips are in array, check the current ip is in the list or not
         if(in_array($request->ip(), $app->binded_ips)){
-            define('APP_ID', $app->id);
+            define('APP_TOKEN', $app->token);
             return $next($request);
         }
         else{
