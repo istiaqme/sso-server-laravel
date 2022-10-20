@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['middleware' => 'APIAuthentication'], function(){
+    Route::get('/', [APIController::class, 'index']);
+    Route::post('/link-group/create', [APIController::class, 'linkGroupCreate']);
+    Route::get('/link-group/list', [APIController::class, 'linkGroupList']);
+    Route::get('/link-group/{linkGroupId}/link/list', [APIController::class, 'groupLinks']);
+
+    Route::post('/link/create/{linkGroupId}', [APIController::class, 'createLink']);
+    Route::get('/link/{shortKey}/visits', [APIController::class, 'linkVisits']);
+});
+
+// handle all 404
+Route::fallback(function(){
+    return response()->json(
+        [
+            'status' => 'error',
+            'message' => 'Wrong URL.'
+        ], 
+    404);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
