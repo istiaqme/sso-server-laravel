@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
-
+    'name' => env('APP_NAME', 'SSO Server Laravel'),
+    'CIPHER_KEY' => "nuGcm5&i7iO6wrkJEdIssMDaKfmG69lV", // Must be 32 characters in length as AES-256-CBC is used
     /*
     |--------------------------------------------------------------------------
     | Application Environment
