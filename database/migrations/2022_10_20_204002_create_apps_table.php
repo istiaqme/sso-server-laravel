@@ -15,10 +15,12 @@ class CreateAppsTable extends Migration
     {
         Schema::create('apps', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
+            $table->longText('token');
             $table->text('title', 255);
             $table->text('base_url');
+            $table->string('sdk', 10);
             $table->longText('api_key'); // Encrypted
+            $table->longText('private_key'); // 32 bit private key in encrypted format
             $table->json('binded_ips')->nullable(); 
             $table->boolean('status');
             $table->timestamps();

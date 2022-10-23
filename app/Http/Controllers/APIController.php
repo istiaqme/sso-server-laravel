@@ -33,6 +33,10 @@ class APIController extends Controller
         }
     }
 
+    public function userRegistration(Request $request){
+        
+    }
+
     
 
 
